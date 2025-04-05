@@ -1,7 +1,4 @@
-from pathlib import Path
 
-# Save updated main.py code into a downloadable file
-updated_code = """
 from fastapi import FastAPI, HTTPException, UploadFile, File
 from pydantic import BaseModel
 from typing import List, Optional, Dict
@@ -149,8 +146,3 @@ def reset_model(request: ResetModelRequest):
 @app.get("/model/list")
 def list_models():
     return {"models": list(models.keys())}
-"""
-
-path = "/main.py"
-Path(path).write_text(updated_code)
-path
