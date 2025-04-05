@@ -1,8 +1,7 @@
 
 from fastapi import FastAPI, HTTPException, UploadFile, File
 from pydantic import BaseModel
-from typing import List, Optional, Dict
-from pysd.model import PySD
+from typing import List, Optional, Dict, Any
 import pysd
 import pandas as pd
 import os
@@ -13,7 +12,7 @@ import uuid
 app = FastAPI(title="PySD REST API", version="2.0.0")
 
 # Store multiple models by modelId
-models: Dict[str, PySD] = {}
+models: Dict[str, Any] = {}
 
 # ----------------- Schemas -----------------
 
@@ -40,7 +39,7 @@ class ResetModelRequest(BaseModel):
 
 # ----------------- Helpers -----------------
 
-def get_model(model_id: str) -> PySD:
+def get_model(model_id: str):
     if model_id not in models:
         raise HTTPException(status_code=404, detail=f"Model '{model_id}' not found")
     return models[model_id]
@@ -146,3 +145,4 @@ def reset_model(request: ResetModelRequest):
 @app.get("/model/list")
 def list_models():
     return {"models": list(models.keys())}
+
